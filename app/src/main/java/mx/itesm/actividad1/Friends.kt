@@ -11,10 +11,14 @@ class Friends : AppCompatActivity() {
         setContentView(R.layout.activity_friends)
 
         val boton = findViewById<Button>(R.id.friendsButton)
-
+        val hobby = intent.getStringExtra("hobby")
+        val nombre = intent.getStringExtra("nombre")
         boton.setOnClickListener{
-            val intent = Intent(this, SecondActivity::class.java)
-            startActivity(intent)
+            val intent = Intent()
+            intent.putExtra("hobby", hobby)
+            intent.putExtra("nombre", nombre)
+            finish()
+            //startActivity(intent)
         }
 
     }

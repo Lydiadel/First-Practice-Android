@@ -18,33 +18,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var textoEditable: EditText
 
-    val lanzador =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    val lanzador = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
 
-            Toast.makeText(this, "REGRESANDO DE ACTIVIDAD", Toast.LENGTH_SHORT).show()
-
-            // verificar código y actuar conforme a lo recibido
-            if (result.resultCode == Activity.RESULT_OK) {
-
-                val datos = result.data
-
-                // kotlin - safe call (llamada segura)
-                // anula una línea si un objeto de ella es nulo
-                /*
-            if(datos != null) {
-                Toast.makeText(this, datos.getStringExtra("resultadoNombre"), Toast.LENGTH_SHORT)
-                    .show()
-            }*/
-
-                Toast.makeText(this, datos?.getStringExtra("resultadoNombre"), Toast.LENGTH_SHORT)
-                    .show()
-
-                Toast.makeText(this, "${datos?.getIntExtra("hora", -1)}", Toast.LENGTH_SHORT)
-                    .show()
-
-                // ?: - elvis operator (lo checamos después)
-            }
+        if (result.resultCode == Activity.RESULT_OK){
+            val datos = result.data
+            val hobby = findViewById<TextView>(R.id.editTextTextPersonName2)
+            hobby.text = datos?.getStringExtra("hobby")
         }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

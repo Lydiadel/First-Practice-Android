@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Actividad1"
         tools:targetApi="31">
         <activity
+            android:name=".messageActivity"
+            android:exported="false" />
+        <activity
             android:name=".Friends"
             android:exported="false" />
         <activity

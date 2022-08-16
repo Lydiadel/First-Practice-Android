@@ -15,24 +15,34 @@ import android.content.Intent as Intent
 
 class SecondActivity : AppCompatActivity() {
 
+    private lateinit var hobby : TextView
+
+    val lanzador = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+
+        if (result.resultCode == Activity.RESULT_OK){
+            val datos = result.data
+            hobby = findViewById(R.id.textView3)
+            hobby.text = "Hobby: " + datos?.getStringExtra("hobby")
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
 
-        val nombre = intent.getStringExtra("nombre")
+        val nombre = intent.getStringExtra("nombre").toString()
 
         val texto = findViewById<TextView>(R.id.textView)
         texto.text = "HI " + intent.getStringExtra("nombre")
-
-        val hobby = findViewById<TextView>(R.id.textView3)
-        hobby.text = " " + intent.getStringExtra("hobby")
 
         val hobbiesButton = findViewById<Button>(R.id.button2)
         hobbiesButton.text = "My hobbies"
         hobbiesButton.setOnClickListener {
             val intent = Intent(this, Hobbies::class.java)
-            intent.putExtra("nombre", intent.getStringExtra("nombre"))
-            startActivity(intent)
+            //intent.putExtra("nombre", intent.getStringExtra("nombre"))
+            lanzador.launch(intent)
         }
         val friends = findViewById<Button>(R.id.button3)
         friends.text = "Friends"
@@ -40,10 +50,16 @@ class SecondActivity : AppCompatActivity() {
         friends.setOnClickListener {
 
             val intent = Intent( this, Friends::class.java )
-            intent.putExtra("nombre", intent.getStringExtra("nombre"))
+            intent.putExtra("hobby", hobby.text)
+            intent.putExtra("nombre", nombre)
             startActivity(intent)
         }
-        val message = findViewById<Button>(R.id.button4)
-        message.text = "Send message"
+
+        val messageSend = findViewById<Button>(R.id.button4)
+
+        messageSend.setOnClickListener{
+            val intent = Intent( this, messageActivity::class.java )
+            startActivity(intent)
+        }
     }
 }
